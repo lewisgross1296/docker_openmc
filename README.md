@@ -14,6 +14,10 @@ docker build -t ligross/openmc:openmc_stable .
 ```
 docker build --no-cache -t ligross/openmc:openmc_stable .
 ```
+## if you want to provide a path to the dockerfile
+```
+docker build -t ligross/openmc:feature -f /path/to/dockerfile  .
+```
 ## run the image in interactive mode with -i
 ```
 docker container run -it image_id
@@ -25,3 +29,6 @@ docker run -it ligross/openmc:openmc_stable
 ## push instructions
 ```
 docker push ligross/openmc:openmc_stable
+```
+## feature Dockerfiles build commands
+docker build -t ligross/openmc:raytrace_plot -f test_raytrace_plot/Dockerfile .
