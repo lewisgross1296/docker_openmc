@@ -45,13 +45,12 @@ RUN pip install --upgrade cmake
 # RUN update-alternatives --install </path/to/alternative> <name> </path/to/source> <priority>
 RUN update-alternatives --install /usr/local/bin/python python /usr/bin/python3 99
 
-# create directorries needed for dependencies, data, the openmc repo, and the test_depltion simulation
+# create directorries needed for dependencies, data, and the place to clone the openmc repo
 RUN mkdir /home/software && \
     mkdir /home/software/openmc && \
     mkdir /home/software/temp && \
     mkdir /home/lewis && \
-    mkdir /home/lewis/cross_sections && \
-    mkdir /home/lewis/test_depletion
+    mkdir /home/lewis/cross_sections
 
 # Make lewis the owner of /home/lewis and /home/softawre to avoid permisisons issues
 RUN chown -R lewis /home/lewis
@@ -89,7 +88,7 @@ ENV OPENMC_CROSS_SECTIONS /home/lewis/cross_sections/endfb-vii.1-hdf5/cross_sect
 # clone openmc
 RUN git clone --recurse-submodules https://github.com/openmc-dev/openmc.git
 
-WORKDIR openmc
+WORKDIR /home/lewis/openmc
 
 # build and install OpenMC
 RUN mkdir build && \
@@ -98,8 +97,5 @@ RUN mkdir build && \
     make install -j8
 
 RUN rm -rf /home/software/temp
-
-COPY depletion.py /home/lewis/test_depletion
-COPY chain_simple.xml /home/lewis/test_depletion
 
 RUN pip install .
