@@ -59,8 +59,6 @@ RUN chown -R lewis /home/software
 
 COPY hdf5-1_13_2.tar.gz /home/software/temp
 
-ENV CC /usr/bin/mpicc
-
 # build hdf5 and install in /home/software/hdf5
 RUN mkdir /home/software/hdf5 && \
     cd /home/software/temp && \
@@ -88,10 +86,9 @@ WORKDIR /home/lewis
 RUN wget -q -O - https://anl.box.com/shared/static/9igk353zpy8fn9ttvtrqgzvw1vtejoz6.xz | tar -C cross_sections -xJ
 ENV OPENMC_CROSS_SECTIONS /home/lewis/cross_sections/endfb-vii.1-hdf5/cross_sections.xml
 
-# clone openmc
-# RUN git clone --recurse-submodules https://github.com/openmc-dev/openmc.git
-RUN git clone --recurse-submodules https://github.com/gridley/openmc.git
-WORKDIR openmc
+# # clone openmc
+RUN git clone -b raytrace_plots --single-branch --recurse-submodules https://github.com/gridley/openmc.git
+WORKDIR /home/lewis/openmc
 
 # build and install OpenMC
 RUN mkdir build && \
@@ -104,5 +101,5 @@ RUN rm -rf /home/software/temp
 RUN pip install .
 
 RUN mkdir /home/lewis/test_rayrace_plot
-COPY test_raytrace_plot /home/lewis/test_rayrace_plot
+COPY *.xml /home/lewis/test_rayrace_plot
 WORKDIR /home/lewis/test_rayrace_plot
