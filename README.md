@@ -1,0 +1,2 @@
+# docker_openmc
+A repository to build a clean OpenMC installation from a Dockerfile. There are various directories. The  most important is stable, which can be used to build a stable version of the develop branch of `openmc-dev/openmc`. Each sub-directory is named for the specific use case of the Dockerfile contained within.

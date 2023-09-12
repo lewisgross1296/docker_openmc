@@ -1,6 +1,3 @@
-# docker_openmc
-A repository to build a clean OpenMC installation from a Dockerfile
-
 ## build instructions
 ```
 docker build -t user_name/image_name:tag_name .
