@@ -91,7 +91,8 @@ RUN git clone --recurse-submodules https://github.com/openmc-dev/openmc.git
 WORKDIR /home/lewis/openmc
 
 # build and install OpenMC
-RUN mkdir build && \
+RUN git checkout v0.13.3 && \
+    mkdir build && \
     cd build && \
     cmake -DCMAKE_INSTALL_PREFIX=/home/software/openmc -DOPENMC_USE_MPI=ON -DCMAKE_BUILD_TYPE=Debug .. && \
     make install -j8
